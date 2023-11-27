@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} Input code auth {% endblock %}
+
+{% block body %}
+    <div>
+        <form method="post" class="buttons-container">
+            <h2>Ввод кода авторизации</h2>
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="buttons-container" type="submit">Подтвердить</button>
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+           
+        </form>
+    </div>
+{% endblock  %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Registration {% endblock %}
+
+{% block body %}
+
+
+<form class="buttons-container">
+    <h1>Registration</h1>
+    {% csrf_token %}
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    <button method="get" type="submit" formaction="{% url 'login' %}" class="buttons-container">Войти с существуйющим
+        номером</button><br>
+    {% endif %}
+    {% if good_message %}
+    <p style="color: red;">{{ good_message }}</p>
+    <button method="get" type="submit" formaction="{% url 'user_page' %}" class="buttons-container">пЕрейти на свою
+        страницу?
+    </button><br>
+    {% endif %}
+    {{ form.as_p }}
+    <button class="buttons-container" method="post" formaction="{% url 'registration' %}"
+        type="submit">Зарегистрироваться</button>
+</form>
+{% endblock %}

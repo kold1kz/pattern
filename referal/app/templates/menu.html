@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %} Menu {% endblock %}
+
+{% block body %}
+<div>
+    <form class="buttons-container" method="get">
+        <h1>Menu</h1>
+        <button type="submit" formaction="{% url 'login' %}" class="buttons-container">Войти</button><br>
+        <button type="submit"class="buttons-container" formaction="{% url 'registration' %}">Регистрация</button><br>
+    </form>
+</div>
+{% endblock %}

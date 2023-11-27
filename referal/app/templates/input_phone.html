@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Auth{% endblock %}
+
+{% block body %}
+
+    <div>
+        <form class="buttons-container" method="post">
+            <h2>Авторизация по номеру телефона</h2><br>
+            {% csrf_token %}
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+                <button type="submit" class="buttons-container" formaction="{% url 'registration' %}">Зарегистрироваться</button>
+            {% endif %}
+            {{form.as_p}}
+            <button class="buttons-container" type="submit">Отправить код</button>
+            <br>
+            
+        </form>
+    </div>
+{% endblock %}
