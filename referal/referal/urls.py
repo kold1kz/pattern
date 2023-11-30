@@ -16,20 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app import views
+from app import views as app
+from gpttest.views import TaskListView, TaskCreateView, TaskDetailAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from simple_chat.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.test_celery),
-    # path('login/', views.login, name='login'),
-    # path('enter_verification_code/', views.enter_verification_code, name='enter_verification_code'),
-    # # path('registration/', views.registration, name='registration'),
-    # path('api/token/',TokenObtainPairView.as_view(),name='token'),
-    # path('api/refresh_token/',TokenRefreshView.as_view(), name='refresh_token'),
-    # # path('', MenuGet.as_view(), name='menu'),
-    # path('api/user_page', UserpageGet.as_view(), name='user_page'),
-    # path('api/login/', LoginPage.as_view(), name='login'),
-    # path('api/registration/', RegisterPage.as_view(), name='registration'),
-    # path('api/back/add_user/', AddUser.as_view(),name='add_user')
+    path('redis', app.test_celery),
+    path('login/', app.login, name='login'),
+    path('enter_verification_code/', app.enter_verification_code, name='enter_verification_code'),
+    path('registration/', app.registration, name='registration'),
+    path('api/token/',TokenObtainPairView.as_view(),name='token'),
+    path('api/refresh_token/',TokenRefreshView.as_view(), name='refresh_token'),
+    path('', app.MenuGet.as_view(), name='menu'),
+    path('api/user_page', app.UserpageGet.as_view(), name='user_page'),
+    path('api/login/', app.LoginPage.as_view(), name='login'),
+    path('api/registration/', app.RegisterPage.as_view(), name='registration'),
+    path('api/back/add_user/', app.AddUser.as_view(),name='add_user'),
+    path('api/gpttest/tasks/', TaskListView.as_view(), name="task-list"),
+    path('api/gpttest/tasks/create/', TaskCreateView.as_view(), name="task-create"),
+    path('api/gpttest/tasks/detail/<int:pk>/', TaskDetailAPIView.as_view(), name="task-detail")
 ]
