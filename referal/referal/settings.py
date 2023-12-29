@@ -56,10 +56,10 @@ MIDDLEWARE = [
 
 LOHGIN_URL = "/api/sign_in"
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-}
+# SIMPLE_JWT = {
+#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+# }
 
 CORS_ORIGIN_WHITELIST = ["https://localhost:8000","https://127.0.0.1:8000"]
 
@@ -117,15 +117,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework_jwt.authentication.JSONWebTokenAuthentication'],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.TemplateHTMLRenderer',
-    ],
-    'TEST_REQUEST_DEFAULT_FORMAT':'json',
-    'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.DjangoModelPermissions',),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework_jwt.authentication.JSONWebTokenAuthentication'],
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'rest_framework.renderers.JSONRenderer',
+#         'rest_framework.renderers.TemplateHTMLRenderer',
+#     ],
+#     'TEST_REQUEST_DEFAULT_FORMAT':'json',
+#     'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.DjangoModelPermissions',),
+# }
 
 
 # Internationalization

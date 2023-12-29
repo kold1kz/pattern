@@ -98,36 +98,39 @@ class LoginPage(generics.CreateAPIView):
     def get(self, request):
         """method get"""
         form = PhoneNumberForm()
-        return render(request, 'enter_verification_code.html', {'form': form})
+        return render(request, 'verif_code.html', {'form': form})
 
     def post(self,request):
         """method post"""
         form = PhoneNumberForm()
-        if form.is_valid():
-            phone_number = form.cleaned_data['phone_number']
-            if validate_phone(phone_number=phone_number):
-                if phone_is_created(phone_number=phone_number):
-                    verification_code = send_verification_code()
-                    request.session['phone_number'] = phone_number
-                    add_verification_code(phone_number=phone_number, code=verification_code)
-                    return redirect('enter_verification_code')
-                else:
-                    error_message = "Error: No User with this number"
-                    return render(request, 'input_phone.html', {'form': form, 'error_message': error_message})
 
+        phone_number = request.data['phone_number']
+        if validate_phone(phone_number=phone_number):
+            if phone_is_created(phone_number=phone_number):
+                verification_code = send_verification_code()
+                request.session['phone_number'] = phone_number
+                add_verification_code(phone_number=phone_number, code=verification_code)
+                return redirect('enter_verification_code')
             else:
-                error_message = "Error: Phone number not correct"
-                return Response(template_name='user_page.html', data={'form':form, 'error_message':error_message})
+                error_message = "Error: No User with this number"
+                return render(request, 'input_phone.html', {'form': form, 'error_message': error_message})
+
+        else:
+            error_message = "Error: Phone number not correct"
+            return Response(template_name='user_page.html', data={'form':form, 'error_message':error_message})
 
 class RegisterPage(generics.CreateAPIView):
     """registrPage"""
-    permission_classes=[permissions.AllowAny]
+    # permission_classes=[permissions.AllowAny]
     serializer_class = RegisterterSerializer
-
     def get(self,request):
         """get method"""
-        form=PhoneNumberForm()
-        return render(request, 'registration.html', {'form':form})
+        if 'foo' in request.GET:
+            self.post(request)
+        else:
+            form=PhoneNumberForm()
+            return render(request, 'registration.html', {'form':form})
+
 
     def post(self, request):
         """post method"""
@@ -136,6 +139,7 @@ class RegisterPage(generics.CreateAPIView):
         user = serializer.save()
         message = RegisterterSerializer(user, context=self.get_serializer_context()).data
         form = PhoneNumberForm()
+        print(message)
         return render(request, 'registration.html',{'form':form, 'good_message':message})
         # return Response({
         #     "user": RegisterterSerializer(user, context=self.get_serializer_context()).data,
@@ -185,32 +189,32 @@ def login(request):
     # return render(request, 'input_phone.html', {'form': form})
 
 
-@api_view(['GET', 'POST'])
-def registration(request):
-    """registration"""
-    if request.method == 'POST':
-        form = PhoneNumberForm(request.POST)
-        if form.is_valid():
-            phone_number = form.cleaned_data['phone_number']
-            if validate_phone(phone_number=phone_number):
-                if add_phone(phone_number=phone_number):
-                    verification_code = send_verification_code()
-                    request.session['phone_number'] = phone_number
-                    add_verification_code(phone_number=phone_number, code=verification_code)
-                    messages.success(request, f'Регистрация успешна для номера: {phone_number}')
-                    return redirect('user_page')
-                else:
-                    error_message = "Error: User with this phone already created"
-                    return render(request, 'registration.html', {'form': form, 'error_message': error_message})
-
-            else:
-                error_message = "Error: Phone number not correct"
-                return render(request, 'registration.html', {'form': form, 'error_message': error_message})
-    elif request.method == 'GET':
-        return render(request, 'registration.html', {'form': form})
-    else:
-        form = PhoneNumberForm()
-    return render(request, 'registration.html', {'form': form})
+# @api_view(['GET', 'POST'])
+# def registration(request):
+#     """registration"""
+#     if request.method == 'POST':
+#         form = PhoneNumberForm(request.POST)
+#         if form.is_valid():
+#             phone_number = form.cleaned_data['phone_number']
+#             if validate_phone(phone_number=phone_number):
+#                 if add_phone(phone_number=phone_number):
+#                     verification_code = send_verification_code()
+#                     request.session['phone_number'] = phone_number
+#                     add_verification_code(phone_number=phone_number, code=verification_code)
+#                     messages.success(request, f'Регистрация успешна для номера: {phone_number}')
+#                     return redirect('user_page')
+#                 else:
+#                     error_message = "Error: User with this phone already created"
+#                     return render(request, 'registration.html', {'form': form, 'error_message': error_message})
+#
+#             else:
+#                 error_message = "Error: Phone number not correct"
+#                 return render(request, 'registration.html', {'form': form, 'error_message': error_message})
+#     elif request.method == 'GET':
+#         return render(request, 'registration.html', {'form': form})
+#     else:
+#         form = PhoneNumberForm()
+#     return render(request, 'registration.html', {'form': form})
 
 
 @api_view(['GET', 'POST'])

@@ -4,7 +4,6 @@ from .models import *
 from .serializers import * 
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import OrderingFilter, SearchFilter
-from django_filters.
 # Create your views here.
 
 class PostListView(ListAPIView):
