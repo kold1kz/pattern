@@ -9,7 +9,7 @@ COPY ./req.txt .
 
 RUN pip install -r req.txt
 
-COPY ./referal ./referal
+COPY . .
 
-CMD ["python3", "./referal/manage.py","runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "referal.referal.wsgi:application", "--log-level", "debug", "--workers", "6", "--timeout", "300", "--bind", "0:8000"]
 

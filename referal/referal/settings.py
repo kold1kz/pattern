@@ -56,12 +56,23 @@ MIDDLEWARE = [
 
 LOHGIN_URL = "/api/sign_in"
 
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-# }
+SIMPLE_JWT = {
+    "TOKEN_OBTAIN_SERIALIZER": "referal.serializers.CustomTokenObtainPairSerializer",
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=120),
+    'ROTATE_REFRESH_TOKENS': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': 'django-insecure-bs&=vr!u4o7^ayexl46=d33whb^iw^%_^3=-i@mo%))-$by7@z',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
-CORS_ORIGIN_WHITELIST = ["https://localhost:8000","https://127.0.0.1:8000"]
+CORS_ORIGIN_WHITELIST = ["https://localhost:8000", "https://127.0.0.1:8000"]
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_URLS_REGEX = r'^/referal/.*$'
 
 ROOT_URLCONF = 'referal.urls'
 
@@ -81,6 +92,18 @@ TEMPLATES = [
     },
 ]
 
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Должен быть выше commonmiddleware
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
 WSGI_APPLICATION = 'referal.wsgi.application'
 
 
@@ -91,8 +114,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         'NAME': 'postgres',
-        'USER': 'hamm',
-        'PASSWORD': '1234',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -117,15 +140,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework_jwt.authentication.JSONWebTokenAuthentication'],
-#     'DEFAULT_RENDERER_CLASSES': [
-#         'rest_framework.renderers.JSONRenderer',
-#         'rest_framework.renderers.TemplateHTMLRenderer',
-#     ],
-#     'TEST_REQUEST_DEFAULT_FORMAT':'json',
-#     'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.DjangoModelPermissions',),
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'PAGE_SIZE': 100,
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework.renderers.TemplateHTMLRenderer',
+    # ],
+    # 'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.DjangoModelPermissions',),
+}
 
 
 # Internationalization
@@ -150,5 +176,3 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/templates/static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CELERY_BROKER_URL = 'redis://redis:6379'

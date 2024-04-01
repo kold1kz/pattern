@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from .models import Task
 from .serializers import TaskSerializer
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveUpdateDestroyAPIView)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -13,7 +16,7 @@ class TaskListView(ListAPIView):
 
 
 class TaskCreateView(CreateAPIView):
-    permission_classes=[AllowAny]
+    permission_classes = [AllowAny]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
