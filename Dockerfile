@@ -3,13 +3,13 @@ FROM python:3.9
 RUN apt-get update -y
 RUN apt-get upgrade -y
 
-WORKDIR /app
-
-COPY ./req.txt .
+COPY . .
 
 RUN pip install -r req.txt
 
-COPY . .
+WORKDIR pattern/
 
-CMD ["gunicorn", "referal.referal.wsgi:application", "--log-level", "debug", "--workers", "6", "--timeout", "300", "--bind", "0:8000"]
+# RUN python3 manage.py migrate
+
+CMD ["gunicorn", "referal.wsgi:application", "--log-level", "debug", "--workers", "6", "--timeout", "300", "--bind", "0:8000"]
 

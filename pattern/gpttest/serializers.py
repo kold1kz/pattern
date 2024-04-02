@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Task
+
+
 class TaskSerializer(serializers.ModelSerializer):
     '''serializer task'''
     class Meta:
@@ -19,7 +21,8 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
+        instance.description = validated_data.get(
+            'description', instance.description)
         instance.status = validated_data.get('Status', instance.status)
         instance.save()
         return instance

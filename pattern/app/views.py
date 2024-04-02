@@ -118,11 +118,13 @@ class LoginPage(generics.CreateAPIView):
                 return redirect('enter_verification_code')
             else:
                 error_message = "Error: No User with this number"
-                return render(request, 'input_phone.html', {'form': form, 'error_message': error_message})
+                return render(request, 'input_phone.html',
+                              {'form': form, 'error_message': error_message})
 
         else:
             error_message = "Error: Phone number not correct"
-            return Response(template_name='user_page.html', data={'form': form, 'error_message': error_message})
+            return Response(template_name='user_page.html',
+                            data={'form': form, 'error_message': error_message})
 
 
 class RegisterPage(generics.CreateAPIView):
@@ -147,7 +149,8 @@ class RegisterPage(generics.CreateAPIView):
             user, context=self.get_serializer_context()).data
         form = PhoneNumberForm()
         print(message)
-        return render(request, 'registration.html', {'form': form, 'good_message': message})
+        return render(request, 'registration.html', {'form': form,
+                                                     'good_message': message})
         # return Response({
         #     "user": RegisterterSerializer(user, context=self.get_serializer_context()).data,
         #     "message": "Пользователь успешно создан",

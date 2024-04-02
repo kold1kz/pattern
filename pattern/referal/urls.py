@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path
 from app import views as app
 from gpttest.views import TaskListView, TaskCreateView, TaskDetailAPIView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView, TokenRefreshView)
 from simple_chat.views import *
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,3 +42,5 @@ urlpatterns = [
     path('api/gpttest/tasks/detail/<int:pk>/',
          TaskDetailAPIView.as_view(), name="task-detail")
 ]
+
+urlpatterns += staticfiles_urlpatterns()
