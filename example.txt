@@ -1,0 +1,8 @@
+CREATE TABLE public.candidats (
+	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	first_name varchar NOT NULL,
+	second_name varchar NOT NULL,
+	adress varchar NULL,
+	vacancy_id int4 NULL,
+	CONSTRAINT candidats_pk PRIMARY KEY (id)
+);
