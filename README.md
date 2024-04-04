@@ -1,5 +1,6 @@
 # pattern
 
+### Перед собиранием контейнера добавить .env файл в конь репозитория
 
 ## Правила работы с репозиторием на GitLab (!):
 
@@ -48,9 +49,17 @@ git push
 ## Памятка по работе с docker:
 - собирание docker - команда собирет все докер контейнеры
 ```sh
-sudo docker compose build or sudo docker-compose build
+sudo docker compose build 
+```
+or 
+```sh
+sudo docker-compose build
 ```
 - Запуск docker - команда запустит все докер контейнеры
 ```sh
-sudo docker compose up or sudo docker-compose up
+sudo docker compose up 
+```
+or
+```sh
+sudo docker-compose up
 ```
