@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'app',
-    'gpttest',
-    'simple_chat'
 ]
 
 MIDDLEWARE = [
@@ -113,11 +111,11 @@ WSGI_APPLICATION = 'referal.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': 'postgres',
+        'NAME': 'db',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'database',
-        'PORT': '5432',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
@@ -169,7 +167,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/templates/static')]
 
 # Default primary key field type
