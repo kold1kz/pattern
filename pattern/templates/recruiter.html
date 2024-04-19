@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Заголовок страницы{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2>Список вакансий</h2>
+        {% for vacancy in queryset %}
+        <div class="vacancy">
+            <h3>{{ vacancy.name}}</h3>
+            <p>{{ vacancy.user }}</p>
+            <a href="{% url 'read_vacancy_page' pk=vacancy.pk %}" class="btn btn-primary">Подробнее</a>
+            <a href="{% url 'update_vacancy_page' pk=vacancy.pk %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'delete_vacancy' pk=vacancy.pk %}" class="btn-danger">Удалить</a>
+        </div>
+    {% empty %}
+        <p>Нет доступных вакансий.</p>
+    {% endfor %}
+    <a class="btn" href="{% url 'create_vacancy_page' %}">Создать вакансию</a>
+    </div>
+{% endblock content %}

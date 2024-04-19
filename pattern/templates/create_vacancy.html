@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Создание вакансии{% endblock %}
+{% block content %}
+<div class="container">
+    <form action="{% url 'create_vacancy_page' %}" method="post">
+        {% csrf_token %}
+        <input type="name" name="name" placeholder="Название вакансии" required>
+        <input type="username" name="skills" placeholder="Навык" required>
+        <input type="username" name="level" placeholder="Уровень владения" required>
+        <input type="submit" value="Далее">
+        {% if not status %}
+                <p style="color: red;">Вакансия не создалась по приичини {{ text }}</p>
+        {% endif %}
+    </form>
+{% endblock content %}

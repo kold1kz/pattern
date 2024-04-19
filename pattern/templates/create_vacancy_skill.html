@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Добавление скилов для вакансии{% endblock %}
+{% block content %}
+<div class="container">
+    <form action="{% url 'create_vacancy_page' %}" method="post">
+        {% csrf_token %}
+        <input type="username" name="skills" placeholder="Навык" required>
+        <input type="username" name="level" placeholder="Уровень владения" required>        
+        <input type="submit" value="сохранить">
+        <div class="register">
+            Добавить еще навык? <a href="{% url 'update_vacancy_page' %}">Войти</a>
+        </div>
+    </form>
+{% endblock content %}

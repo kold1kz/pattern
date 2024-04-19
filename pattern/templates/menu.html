@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Вакансии{% endblock %}
+{% block content %}
+<body>
+    {% comment %} <div class="navbar">
+        <a href="{% url 'menu' %}" {% if request.path == '/menu/' %}class="active"{% endif %}>Меню</a>
+        <a href="{% url 'user_page' %}" {% if request.path == '/user_page/' %}class="active"{% endif %}>Моя страница</a>
+        {% if user.is_staff %}
+            <a href="{% url 'recruiter' %}" {% if request.path == '/recruiter/' %}class="active"{% endif %}>Мои вакансии</a>
+        {% endif %}
+        <a href="{% url 'find_vacancy_page' %}" {% if request.path == '/find_vacancy/' %}class="active"{% endif %}>Найти вакансию</a>
+        <a href="{% url 'logout' %}" {% if request.path == '/logout/' %}class="active"{% endif %}>Выйти</a>
+    </div> {% endcomment %}
+    <div class="container">
+        <h2>Список вакансий</h2>
+        {% for vacancy in queryset %}
+            <div class="vacancy">
+                <h3>{{ vacancy.name}}</h3>
+                <p>{{ vacancy.user }}</p>
+                {% comment %} class="btn btn-danger" {% endcomment %}
+            </div>
+        {% empty %}
+            <p>Нет доступных вакансий.</p>
+        {% endfor %}
+    </div>
+</body>
+{% endblock content %}
