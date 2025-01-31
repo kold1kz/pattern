@@ -2,8 +2,8 @@ version: '3.9'
 
 services:
 
-  database:
-    container_name: database
+  database_1:
+    container_name: database_1
     image: postgres:13.3
     environment:
       POSTGRES_USER: root
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - database
+      - database_1
     networks:
       - djangonetwork
     env_file:

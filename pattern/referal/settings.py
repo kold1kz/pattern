@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'app',
-    'gpttest',
-    'simple_chat'
+    # 'gpttest',
+    # 'simple_chat'
 ]
 
 MIDDLEWARE = [
